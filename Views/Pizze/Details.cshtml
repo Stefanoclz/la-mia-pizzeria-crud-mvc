@@ -1,6 +1,4 @@
-﻿
-@model Pizza
-
+﻿@model Pizza
 
 <div class="container text-center my-5">
     <h1>
@@ -38,5 +36,13 @@
             </ul>
         </div>
     </div>
+    
     <a class="btn-primary py-2 px-4 rounded-pill" asp-controller="Pizze" asp-action="Index">Indietro</a>
+    
+    <form method="post" asp-controller="Pizze" asp-action="Delete" asp-route-id="@Model.id">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger btn-sm my-3">
+            Delete
+        </button>
+    </form>
 </div>

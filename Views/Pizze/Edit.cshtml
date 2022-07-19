@@ -1,8 +1,7 @@
 ﻿@model Pizza
 
 <form asp-controller"Pizze" asp-action="Edit" asp-route-id="@Model.id" method="post">
-    @Html.AntiForgeryToken
-
+    @Html.AntiForgeryToken()
     <div class="mb-3">
         <strong>Nome:</strong>
         <input asp-for="name" class="d-block w-100" />
@@ -30,4 +29,5 @@
     <div class="text-end">
         <input type="submit" class="btn btn-small btn-success" value="Salva" />
     </div>
+    <a class="btn btn-primary py-2 px-4 rounded-pill" href="/Pizze/Index">Indietro</a>
 </form>
