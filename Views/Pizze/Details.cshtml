@@ -1,0 +1,42 @@
+﻿
+@model Pizza
+
+
+<div class="container text-center my-5">
+    <h1>
+        @Model.name
+    </h1>
+    <div class="row my-5">
+        <div class="col-7">
+            <img class="img-pizza" src="@Model.fotoLink" />
+        </div>
+        <div class="col-5 align-items-center justify-content-center d-flex flex-column bg_grey bg-gradient shadow">
+            <h3>
+                @Model.description
+            </h3>
+            <h5>
+                Prezzo: @Model.prezzo
+            </h5>
+            <h5>
+                Lista Ingredienti:
+            </h5>
+            <ul>
+                @if(@Model.listaIngredienti.Count() > 0)
+                {
+                    @foreach(Ingrediente ingrediente in @Model.listaIngredienti)
+                    {
+                    <li>
+                        @ingrediente.Name
+                    </li>
+                    }
+                }
+                else
+                {
+                    <p>Non sono presenti ingredienti</p>
+                }
+
+            </ul>
+        </div>
+    </div>
+    <a class="btn-primary py-2 px-4 rounded-pill" asp-controller="Pizze" asp-action="Index">Indietro</a>
+</div>

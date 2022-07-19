@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - la_mia_pizzeria_static</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/la_mia_pizzeria_static.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <div class="jumbo">
+            <nav class="d-flex justify-content-end">
+            <button>
+                Accedi
+            </button>
+            <button>
+                Prenota
+            </button>
+        </nav>
+        </div>
+    </header>
+    <div class="container-fluid bg-light bg-gradient">
+        @RenderBody()
+    </div>
+    <footer class="bg-dark bg-gradient d-flex justify-content-center gx-5 text-white p-3 mt-5">
+        <div class="left-foot d-flex flex-column align-items-center">
+            <h3>Info:</h3>
+            <p>Orario di apertura: 10:00/14:00 - 18:00/24:00</p>
+            <p>Giorni di apertura: Mar - Dom | Riposo settimanale: Lunedì</p>
+            <p>Contattaci: 333 3333333</p>
+            <p>Come trovarci: Gira alla seconda, poi in fondo a destra</p>
+        </div>
+        <div class="right-foot d-flex flex-column align-items-center">
+            <img class="w-25" src="https://images.freeimages.com/images/premium/previews/5223/52239220-vintage-screen-printed-pizza-poster.jpg" />
+        </div>
+    </footer>
+</body>
+</html>

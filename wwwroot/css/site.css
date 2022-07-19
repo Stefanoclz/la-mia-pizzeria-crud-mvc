@@ -1,0 +1,56 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.bg_grey {
+    background-color: lightgrey;
+}
+
+.card {
+    transition: 0.5s ease-in;
+    border: none;
+    margin: 30px 0px;
+    background-color: transparent;
+}
+
+.card img {
+    object-fit: contain;
+    border-radius: 15%
+}
+
+.card:hover {
+    transform:scale(1.1);
+    cursor: pointer;
+}
+
+.jumbo {
+    background-image: url("https://img.freepik.com/premium-vector/black-white-doodle-background-pizzeria-theme_300579-540.jpg?w=2000");
+    background-size: cover;
+    background-position: center;
+    height: 550px;
+    width: 100%;
+}
+
+.foto img {
+    width: 400px;
+}
+
+.img-pizza {
+    width: 100%;
+    object-fit: contain;
+}
