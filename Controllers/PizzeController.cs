@@ -68,7 +68,15 @@ namespace la_mia_pizzeria_static.Controllers
         // GET: HomeController1/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            using(PizzaContext context = new PizzaContext())
+            {
+                Pizza modify = context.Pizza.Where(p => p.id == id).FirstOrDefault();
+                if(modify == null)
+                {
+                    return NotFound();
+                }
+                return View(modify);
+            }
         }
 
         // POST: HomeController1/Edit/5
