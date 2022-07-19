@@ -41,14 +41,21 @@ namespace la_mia_pizzeria_static.Controllers
         // GET: HomeController1/Create
         public ActionResult Create()
         {
-            return View();
+            using(PizzaContext context = new PizzaContext())
+            {
+                List<Category> categories = context.Category.ToList();
+                PizzaCategory model = new PizzaCategory();
+                model.categories = categories;
+                model.pizza = new Pizza();
+                return View(model);
+            }
         }
 
         // POST: HomeController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MoreThanFiveWordsValidationAttribute]
-        public ActionResult Create(Pizza pizza)
+        public ActionResult Create(PizzaCategory pizza)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +64,7 @@ namespace la_mia_pizzeria_static.Controllers
 
             using (PizzaContext db = new PizzaContext())
             {
-                db.Pizza.Add(pizza);
+                db.Pizza.Add(pizza.pizza);
                 db.SaveChanges();
             }
             

@@ -1,4 +1,5 @@
-﻿using la_mia_pizzeria_static.ValidationAttributes;
+﻿using la_mia_pizzeria_static.Models;
+using la_mia_pizzeria_static.ValidationAttributes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,6 +29,10 @@ public class Pizza
     public decimal prezzo { get; set; }
 
     public List<Ingrediente>? listaIngredienti { get; set; }
+
+    public int? CategoryId { get; set; }
+
+    public Category? Categoria { get; set; }
 
     public Pizza(string name, string description, string fotoLink, decimal prezzo)
     {
