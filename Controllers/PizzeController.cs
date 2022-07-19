@@ -82,15 +82,32 @@ namespace la_mia_pizzeria_static.Controllers
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Pizza pizza)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View("Edit", pizza);
             }
-            catch
+            
+            using(PizzaContext context = new PizzaContext())
             {
-                return View();
+                Pizza modify = context.Pizza.Where(p => p.id == id).FirstOrDefault();
+                if(modify != null)
+                {
+                    modify.name = pizza.name;
+                    modify.description = pizza.description;
+                    modify.fotoLink = pizza.fotoLink;
+                    modify.prezzo = pizza.prezzo;
+
+                    context.Update(modify);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction("Index");
             }
         }
 
