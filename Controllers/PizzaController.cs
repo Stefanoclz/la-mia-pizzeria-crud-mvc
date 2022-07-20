@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using la_mia_pizzeria_static.Models;
 using System.Linq;
 using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 using la_mia_pizzeria_static.ValidationAttributes;
 
 namespace la_mia_pizzeria_static.Controllers
@@ -13,7 +15,14 @@ namespace la_mia_pizzeria_static.Controllers
         {
             PizzaContext context = new PizzaContext();
             List<Pizza> listaPizze = context.Pizza.ToList();
-            return View("Index", listaPizze);
+            List<PizzaCategory> listaPizzeCat = new List<PizzaCategory>();
+            foreach (Pizza pizza in listaPizze)
+            {
+                PizzaCategory pizzaCategory = new PizzaCategory();
+                pizzaCategory.Pizza = pizza;
+                listaPizzeCat.Add(pizzaCategory);
+            }
+            return View("Index", listaPizzeCat);
         }
 
         // GET: HomeController1/Details/5
@@ -95,29 +104,26 @@ namespace la_mia_pizzeria_static.Controllers
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, PizzaCategory pizza)
+        public ActionResult Edit(int id, PizzaCategory model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             using (PizzaContext context = new PizzaContext())
             {
                 Pizza modify = context.Pizza.Where(p => p.id == id).FirstOrDefault();
                 if (modify != null)
                 {
-                    pizza.Pizza = modify;
-                    if (!ModelState.IsValid)
-                    {
-                        pizza.Categories = context.Category.ToList();
-                        return View(pizza);
-                    }
+                    //pizza.Pizza = modify;
+                    
+                    modify.name = model.Pizza.name;
+                    modify.description = model.Pizza.description;
+                    modify.fotoLink = model.Pizza.fotoLink;
+                    modify.prezzo = model.Pizza.prezzo;
+                    modify.CategoryId = model.Pizza.CategoryId;
 
-
-
-                    Category nuova = pizza.Categories.FirstOrDefault();
-                    modify.name = pizza.Pizza.name;
-                    modify.description = pizza.Pizza.description;
-                    modify.fotoLink = pizza.Pizza.fotoLink;
-                    modify.prezzo = pizza.Pizza.prezzo;
-                    modify.CategoryId = pizza.Pizza.CategoryId;
-                    modify.Categoria = nuova;
                     context.Update(modify);
                     context.SaveChanges();
                 }

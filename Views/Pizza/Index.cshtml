@@ -1,6 +1,6 @@
 ﻿
 
-@model List<Pizza>
+@model List<PizzaCategory>
 
 
 
@@ -30,15 +30,16 @@
             }
             else
             {
-                @foreach(Pizza pizza in @Model)
+                @foreach(PizzaCategory pizza in @Model)
                 {
                 <div class="col-4 text-center card align-items-center justify-content-center">
-                    <img src=@pizza.fotoLink class="w-100 h-50"/>
-                    <h2>@pizza.name</h2>
-                    <p>@pizza.description</p>
-                    <p><strong>Prezzo: </strong>@pizza.prezzo</p>
-                    <p><a href="/Pizza/Details/@pizza.id">Dettagli</a><p>
-                    <p><a href="/Pizza/Edit/@pizza.id">Modifica</a></p>
+                    <img src=@pizza.Pizza.fotoLink class="w-100 h-50"/>
+                    <h2>@pizza.Pizza.name</h2>
+                    <p>@pizza.Pizza.description</p>
+                    <p><strong>Prezzo: </strong>@pizza.Pizza.prezzo</p>
+                    <p><strong>Categoria: </strong>@pizza.Pizza.CategoryId</p>
+                    <p><a href="/Pizza/Details/@pizza.Pizza.id">Dettagli</a><p>
+                    <p><a href="/Pizza/Edit/@pizza.Pizza.id">Modifica</a></p>
                 </div>
                 }
             }
