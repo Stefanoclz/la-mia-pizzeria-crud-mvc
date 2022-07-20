@@ -14,7 +14,7 @@ public class Pizza
     public string name { get; set; }
 
     [Required(ErrorMessage = "Il campo è obbligatorio")]
-    [StringLength(100, ErrorMessage = "La descrizione non può avere più di 100 caratteri")]
+    [StringLength(400, ErrorMessage = "La descrizione non può avere più di 400 caratteri")]
     [MoreThanFiveWordsValidationAttribute]
     [Column(TypeName = "text")]
     public string description { get; set; }

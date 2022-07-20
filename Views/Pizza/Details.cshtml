@@ -1,27 +1,33 @@
-﻿@model Pizza
+﻿@model PizzaCategory
 
 <div class="container text-center my-5">
     <h1>
-        @Model.name
+        @Model.Pizza.name
     </h1>
+    @foreach(Category category in @Model.Categories)
+    {
+        <h3>
+            @category.Name
+        </h3>
+    }
     <div class="row my-5">
         <div class="col-7">
-            <img class="img-pizza" src="@Model.fotoLink" />
+            <img class="img-pizza" src="@Model.Pizza.fotoLink" />
         </div>
         <div class="col-5 align-items-center justify-content-center d-flex flex-column bg_grey bg-gradient shadow">
             <h3>
-                @Model.description
+                @Model.Pizza.description
             </h3>
             <h5>
-                Prezzo: @Model.prezzo
+                Prezzo: @Model.Pizza.prezzo
             </h5>
             <h5>
                 Lista Ingredienti:
             </h5>
             <ul>
-                @if(@Model.listaIngredienti.Count() > 0)
+                @if(@Model.Pizza.listaIngredienti.Count() > 0)
                 {
-                    @foreach(Ingrediente ingrediente in @Model.listaIngredienti)
+                    @foreach(Ingrediente ingrediente in @Model.Pizza.listaIngredienti)
                     {
                     <li>
                         @ingrediente.Name
@@ -37,9 +43,9 @@
         </div>
     </div>
     
-    <a class="btn-primary py-2 px-4 rounded-pill" asp-controller="Pizze" asp-action="Index">Indietro</a>
+    <a class="btn-primary py-2 px-4 rounded-pill" asp-controller="Pizza" asp-action="Index">Indietro</a>
     
-    <form method="post" asp-controller="Pizze" asp-action="Delete" asp-route-id="@Model.id">
+    <form method="post" asp-controller="Pizza" asp-action="Delete" asp-route-id="@Model.Pizza.id">
         @Html.AntiForgeryToken()
         <button type="submit" class="btn btn-danger btn-sm my-3">
             Delete

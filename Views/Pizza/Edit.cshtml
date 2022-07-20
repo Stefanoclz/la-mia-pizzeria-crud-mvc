@@ -30,17 +30,21 @@
         <strong>Categoria:</strong>
         <select asp-for="Pizza.CategoryId" class="d-block w-100">
             <option value=""></option>
-            @foreach(Category category in Model.Categories)
+            @if(@Model.Categories != null)
             {
-                @if(Model.Pizza.CategoryId == category.Id)
+                @foreach(Category category in @Model.Categories)
                 {
-                    <option value="@category.Id" selected>@category.Name</option>
-                }
-                else
-                {
-                    <option value="@category.Id">@category.Name</option>
+                    @if(Model.Pizza.CategoryId == category.Id)
+                    {
+                        <option value="@category.Id" selected>@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
                 }
             }
+           
         </select>
     </div>
 

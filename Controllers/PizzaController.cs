@@ -41,8 +41,11 @@ namespace la_mia_pizzeria_static.Controllers
                 }
                 else
                 {
+                    PizzaCategory pizzaCat = new PizzaCategory();
                     context.Entry(singola).Collection("listaIngredienti").Load();
-                    return View("Details", singola);
+                    pizzaCat.Pizza = singola;
+                    pizzaCat.Categories = context.Category.Where(c => c.Id == singola.CategoryId).ToList();
+                    return View("Details", pizzaCat);
                 }
             }
                     
@@ -65,21 +68,20 @@ namespace la_mia_pizzeria_static.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MoreThanFiveWordsValidationAttribute]
-        public ActionResult Create(PizzaCategory pizza)
+        public ActionResult Create(PizzaCategory model)
         {
             if (!ModelState.IsValid)
             {
-                return View("Create", pizza);
+                return View(model);
             }
 
             using (PizzaContext db = new PizzaContext())
             {
-                db.Pizza.Add(pizza.Pizza);
-                db.SaveChanges();
-            }
-            
 
-            return RedirectToAction("Index");
+                db.Pizza.Add(model.Pizza);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: HomeController1/Edit/5
@@ -105,7 +107,7 @@ namespace la_mia_pizzeria_static.Controllers
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, PizzaCategory model)
+        public IActionResult Edit(int id, PizzaCategory model)
         {
             if (!ModelState.IsValid)
             {

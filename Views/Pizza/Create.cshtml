@@ -6,40 +6,44 @@
         @Html.AntiForgeryToken()
         <div class="mb-3">
             <strong>Nome:</strong>
-            <input asp-for="Pizza.name" class="d-block w-100" />
-            <span asp-validation-for="Pizza.name" class="text-danger"></span>
+            <input asp-for="@Model.Pizza.name" class="d-block w-100" />
+            <span asp-validation-for="@Model.Pizza.name" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Descrizione:</strong>
-            <input asp-for="Pizza.description" class="d-block w-100" />
-            <span asp-validation-for="Pizza.description" class="text-danger"></span>
+            <input asp-for="@Model.Pizza.description" class="d-block w-100" />
+            <span asp-validation-for="@Model.Pizza.description" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Link foto:</strong>
-            <input asp-for="Pizza.fotoLink" class="d-block w-100" />
-            <span asp-validation-for="Pizza.fotoLink" class="text-danger"></span>
+            <input asp-for="@Model.Pizza.fotoLink" class="d-block w-100" />
+            <span asp-validation-for="@Model.Pizza.fotoLink" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Prezzo:</strong>
-            <select asp-for="Pizza.prezzo" class="d-block w-100"></select>
-            <span asp-validation-for="Pizza.prezzo" class="text-danger"></span>
+            <input asp-for="@Model.Pizza.prezzo" class="d-block w-100" />
+            <span asp-validation-for="@Model.Pizza.prezzo" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <strong>Categoria:</strong>
             <select asp-for="Pizza.CategoryId" class="d-block w-100">
                 <option value=""></option>
-                @foreach(Category category in Model.Categories)
+                @if(@Model.Categories != null)
                 {
-                    @if(Model.Pizza.CategoryId == category.Id)
+                    @foreach(Category category in @Model.Categories)
                     {
-                        <option value="@category.Id" selected>@category.Name</option>
-                    }
-                    else
-                    {
-                        <option value="@category.Id">@category.Name</option>
+                        @if(Model.Pizza.CategoryId == category.Id)
+                        {
+                            <option value="@category.Id" selected>@category.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
                     }
                 }
+                
             </select>
         </div>
 
@@ -47,6 +51,6 @@
         <input type="submit" class="btn btn-small btn-info" value="Salva">
         </div>
      </form>
-     <a class="btn-primary rounded-pill py-2 px-4" href="/Pizze/Index">Indietro</a>
+     <a class="btn-primary rounded-pill py-2 px-4" href="/Pizza/Index">Indietro</a>
 </div>
 
