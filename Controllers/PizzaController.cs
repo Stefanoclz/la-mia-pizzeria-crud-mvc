@@ -20,6 +20,7 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 PizzaCategory pizzaCategory = new PizzaCategory();
                 pizzaCategory.Pizza = pizza;
+                pizzaCategory.Categories = context.Category.Where(c => c.Id == pizza.CategoryId).ToList();
                 listaPizzeCat.Add(pizzaCategory);
             }
             return View("Index", listaPizzeCat);

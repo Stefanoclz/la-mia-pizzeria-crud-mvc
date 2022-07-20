@@ -37,7 +37,11 @@
                     <h2>@pizza.Pizza.name</h2>
                     <p>@pizza.Pizza.description</p>
                     <p><strong>Prezzo: </strong>@pizza.Pizza.prezzo</p>
-                    <p><strong>Categoria: </strong>@pizza.Pizza.CategoryId</p>
+                        @foreach(Category category in @pizza.Categories)
+                        {
+                            <p><strong>Categoria: </strong>@category.Name</p>
+                        }
+                    
                     <p><a href="/Pizza/Details/@pizza.Pizza.id">Dettagli</a><p>
                     <p><a href="/Pizza/Edit/@pizza.Pizza.id">Modifica</a></p>
                 </div>
