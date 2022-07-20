@@ -1,0 +1,51 @@
+﻿@model PizzaCategory;
+
+<form asp-controller="Pizza" asp-action="Edit" asp-route-id="@Model.Pizza.id" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <strong>Nome:</strong>
+        <input asp-for="Pizza.name" class="d-block w-100" />
+        <span asp-validation-for="Pizza.name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <strong>Descrizione:</strong>
+        <input asp-for="Pizza.description" class="d-block w-100" />
+        <span asp-validation-for="Pizza.description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <strong>Link Immagine:</strong>
+        <input asp-for="Pizza.fotoLink" class="d-block w-100" />
+        <span asp-validation-for="Pizza.fotoLink" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <strong>Prezzo:</strong>
+        <input asp-for="Pizza.prezzo" class="d-block w-100" />
+        <span asp-validation-for="Pizza.prezzo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+            <strong>Categoria:</strong>
+            <select asp-for="Pizza.CategoryId" class="d-block w-100">
+                <option value=""></option>
+                @foreach(Category category in Model.Categories)
+                {
+                    @if(Model.Pizza.CategoryId == category.Id)
+                    {
+                        <option value="@category.Id" selected>@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                }
+            </select>
+        </div>
+
+    <div class="text-end">
+        <input type="submit" class="btn btn-small btn-success" value="Salva" />
+    </div>
+    <a class="btn btn-primary py-2 px-4 rounded-pill" href="/Pizze/Index">Indietro</a>
+</form>

@@ -6,7 +6,7 @@ using la_mia_pizzeria_static.ValidationAttributes;
 
 namespace la_mia_pizzeria_static.Controllers
 {
-    public class PizzeController : Controller
+    public class PizzaController : Controller
     {
         // GET: HomeController1
         public ActionResult Index()
@@ -26,7 +26,7 @@ namespace la_mia_pizzeria_static.Controllers
                 Pizza singola = context.Pizza.Where(singola => singola.id == id).FirstOrDefault();
                 if(singola == null)
                 {
-                    return NotFound($"La pizza con id {id} non è stata trovata");
+                    return NotFound($"La Pizza con id {id} non è stata trovata");
 
                 }
                 else
@@ -45,8 +45,8 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 List<Category> categories = context.Category.ToList();
                 PizzaCategory model = new PizzaCategory();
-                model.categories = categories;
-                model.pizza = new Pizza();
+                model.Categories = categories;
+                model.Pizza = new Pizza();
                 return View(model);
             }
         }
@@ -64,7 +64,7 @@ namespace la_mia_pizzeria_static.Controllers
 
             using (PizzaContext db = new PizzaContext())
             {
-                db.Pizza.Add(pizza.pizza);
+                db.Pizza.Add(pizza.Pizza);
                 db.SaveChanges();
             }
             
@@ -82,30 +82,42 @@ namespace la_mia_pizzeria_static.Controllers
                 {
                     return NotFound();
                 }
-                return View(modify);
+
+                List<Category> categorie = context.Category.ToList();
+                PizzaCategory model = new PizzaCategory();
+                model.Pizza = modify;
+                model.Categories = categorie;
+                return View(model);
+         
             }
         }
 
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Pizza pizza)
+        public ActionResult Edit(int id, PizzaCategory pizza)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("Edit", pizza);
-            }
-            
-            using(PizzaContext context = new PizzaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 Pizza modify = context.Pizza.Where(p => p.id == id).FirstOrDefault();
-                if(modify != null)
+                if (modify != null)
                 {
-                    modify.name = pizza.name;
-                    modify.description = pizza.description;
-                    modify.fotoLink = pizza.fotoLink;
-                    modify.prezzo = pizza.prezzo;
+                    pizza.Pizza = modify;
+                    if (!ModelState.IsValid)
+                    {
+                        pizza.Categories = context.Category.ToList();
+                        return View(pizza);
+                    }
 
+
+
+                    Category nuova = pizza.Categories.FirstOrDefault();
+                    modify.name = pizza.Pizza.name;
+                    modify.description = pizza.Pizza.description;
+                    modify.fotoLink = pizza.Pizza.fotoLink;
+                    modify.prezzo = pizza.Pizza.prezzo;
+                    modify.CategoryId = pizza.Pizza.CategoryId;
+                    modify.Categoria = nuova;
                     context.Update(modify);
                     context.SaveChanges();
                 }

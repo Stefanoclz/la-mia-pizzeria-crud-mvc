@@ -2,36 +2,36 @@
 @model PizzaCategory;
 
 <div class="container">
-     <form asp-controller="Pizze" asp-action="Create" method="post">
+     <form asp-controller="Pizza" asp-action="Create" method="post">
         @Html.AntiForgeryToken()
         <div class="mb-3">
             <strong>Nome:</strong>
-            <input asp-for="pizza.name" class="d-block w-100" />
-            <span asp-validation-for="pizza.name" class="text-danger"></span>
+            <input asp-for="Pizza.name" class="d-block w-100" />
+            <span asp-validation-for="Pizza.name" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Descrizione:</strong>
-            <input asp-for="pizza.description" class="d-block w-100" />
-            <span asp-validation-for="pizza.description" class="text-danger"></span>
+            <input asp-for="Pizza.description" class="d-block w-100" />
+            <span asp-validation-for="Pizza.description" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Link foto:</strong>
-            <input asp-for="pizza.fotoLink" class="d-block w-100" />
-            <span asp-validation-for="pizza.fotoLink" class="text-danger"></span>
+            <input asp-for="Pizza.fotoLink" class="d-block w-100" />
+            <span asp-validation-for="Pizza.fotoLink" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Prezzo:</strong>
-            <select asp-for="pizza.prezzo" class="d-block w-100"></select>
-            <span asp-validation-for="pizza.prezzo" class="text-danger"></span>
+            <select asp-for="Pizza.prezzo" class="d-block w-100"></select>
+            <span asp-validation-for="Pizza.prezzo" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <strong>Categoria:</strong>
-            <select asp-for="pizza.CategoryId" class="d-block w-100">
+            <select asp-for="Pizza.CategoryId" class="d-block w-100">
                 <option value=""></option>
-                @foreach(Category category in Model.categories)
+                @foreach(Category category in Model.Categories)
                 {
-                    @if(Model.pizza.CategoryId == category.Id)
+                    @if(Model.Pizza.CategoryId == category.Id)
                     {
                         <option value="@category.Id" selected>@category.Name</option>
                     }

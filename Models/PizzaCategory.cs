@@ -1,7 +1,12 @@
 ﻿
 public class PizzaCategory
 {
-    public Pizza pizza { get; set; }
-    public List<Category> categories { get; set; }
+    public Pizza Pizza { get; set; }
+    public List<Category>? Categories { get; set; }
+
+    public PizzaCategory()
+    {
+
+    }
 }
 
