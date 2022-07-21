@@ -43,10 +43,19 @@
                         <option value="@category.Id">@category.Name</option>
                     }
                 }
-            }
-           
+            }         
         </select>
     </div>
+
+    <div class="mb-3">
+            <strong>Ingredienti:</strong>
+            <select asp-for="@Model.IngredientiSelezionati"
+                multiple="multiple" 
+                size="10" 
+                class="form-control mb-2 mr-sm-2 ml-sm-3 leftlist" 
+                asp-items="@Model.Ingredienti">
+            </select> 
+        </div>
 
     <div class="text-end">
         <input type="submit" class="btn btn-small btn-success" value="Salva" />

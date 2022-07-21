@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using la_mia_pizzeria_static.ValidationAttributes;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Controllers
 {
@@ -118,16 +119,34 @@ namespace la_mia_pizzeria_static.Controllers
         {
             using(PizzaContext context = new PizzaContext())
             {
-                Pizza modify = context.Pizza.Where(p => p.id == id).FirstOrDefault();
+                Pizza modify = context.Pizza.Where(p => p.id == id).Include(p => p.listaIngredienti).FirstOrDefault();
                 if(modify == null)
                 {
                     return NotFound();
                 }
 
                 List<Category> categorie = context.Category.ToList();
+                List<Ingrediente> ingredienti = context.Ingrediente.ToList();
                 PizzaCategory model = new PizzaCategory();
                 model.Pizza = modify;
                 model.Categories = categorie;
+
+                List<SelectListItem> ingredientiList = new List<SelectListItem>();
+
+                foreach (Ingrediente ingrediente in ingredienti)
+                {
+                    ingredientiList.Add(new SelectListItem() { Text = ingrediente.Name, Value = ingrediente.Id.ToString() });
+                }
+
+                model.Ingredienti = ingredientiList;
+
+                model.IngredientiSelezionati = new List<string>();
+
+                foreach(Ingrediente ingr in modify.listaIngredienti)
+                {
+                    model.IngredientiSelezionati.Add(ingr.Id.ToString());
+                }
+
                 return View(model);
          
             }
@@ -145,7 +164,7 @@ namespace la_mia_pizzeria_static.Controllers
 
             using (PizzaContext context = new PizzaContext())
             {
-                Pizza modify = context.Pizza.Where(p => p.id == id).FirstOrDefault();
+                Pizza modify = context.Pizza.Where(p => p.id == id).Include(p => p.listaIngredienti).FirstOrDefault();
                 if (modify != null)
                 {
                     //pizza.Pizza = modify;
@@ -155,6 +174,23 @@ namespace la_mia_pizzeria_static.Controllers
                     modify.fotoLink = model.Pizza.fotoLink;
                     modify.prezzo = model.Pizza.prezzo;
                     modify.CategoryId = model.Pizza.CategoryId;
+
+                    List<Ingrediente> listaIngr = new List<Ingrediente>();
+
+                    
+
+                    modify.listaIngredienti.Clear();
+
+                    if(model.IngredientiSelezionati != null)
+                    {
+                        foreach (string str in model.IngredientiSelezionati)
+                        {
+                            int selectId = int.Parse(str);
+                            Ingrediente ingrediente = context.Ingrediente.Where(ingr => ingr.Id == selectId).First();
+                            modify.listaIngredienti.Add(ingrediente);
+                        }
+                    }
+
 
                     context.Update(modify);
                     context.SaveChanges();
