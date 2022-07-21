@@ -47,7 +47,7 @@
     
     <form method="post" asp-controller="Pizza" asp-action="Delete" asp-route-id="@Model.Pizza.id">
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-danger btn-sm my-3">
+        <button type="submit" class="btn btn-danger btn-sm my-3 fa fa-trash">
             Delete
         </button>
     </form>
