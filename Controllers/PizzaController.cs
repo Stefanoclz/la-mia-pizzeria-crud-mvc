@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using la_mia_pizzeria_static.ValidationAttributes;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace la_mia_pizzeria_static.Controllers
 {
@@ -44,6 +45,16 @@ namespace la_mia_pizzeria_static.Controllers
                     PizzaCategory pizzaCat = new PizzaCategory();
                     context.Entry(singola).Collection("listaIngredienti").Load();
                     pizzaCat.Pizza = singola;
+
+                    List<string> listaIngr = new List<string>();
+
+                    foreach(Ingrediente str in singola.listaIngredienti)
+                    {
+                        listaIngr.Add(str.Name);
+                    }
+
+                    pizzaCat.IngredientiSelezionati = listaIngr;
+
                     pizzaCat.Categories = context.Category.Where(c => c.Id == singola.CategoryId).ToList();
                     return View("Details", pizzaCat);
                 }
@@ -57,9 +68,20 @@ namespace la_mia_pizzeria_static.Controllers
             using(PizzaContext context = new PizzaContext())
             {
                 List<Category> categories = context.Category.ToList();
+                List<Ingrediente> ingredienti = context.Ingrediente.ToList();
                 PizzaCategory model = new PizzaCategory();
                 model.Categories = categories;
                 model.Pizza = new Pizza();
+
+                List<SelectListItem> ingredientiList = new List<SelectListItem>();
+
+                foreach(Ingrediente ingrediente in ingredienti)
+                {
+                    ingredientiList.Add(new SelectListItem() { Text = ingrediente.Name, Value = ingrediente.Id.ToString() });
+                }
+
+                model.Ingredienti = ingredientiList;
+
                 return View(model);
             }
         }
@@ -77,7 +99,14 @@ namespace la_mia_pizzeria_static.Controllers
 
             using (PizzaContext db = new PizzaContext())
             {
+                List<Ingrediente> listaIngr = new List<Ingrediente>();
 
+                foreach(string str in model.IngredientiSelezionati)
+                {
+                    listaIngr.Add(db.Ingrediente.Where(ingr => ingr.Id == int.Parse(str)).First());
+                }
+
+                model.Pizza.listaIngredienti = listaIngr;
                 db.Pizza.Add(model.Pizza);
                 db.SaveChanges();
                 return RedirectToAction("Index");

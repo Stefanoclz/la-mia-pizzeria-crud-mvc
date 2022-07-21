@@ -25,12 +25,12 @@
                 Lista Ingredienti:
             </h5>
             <ul>
-                @if(@Model.Pizza.listaIngredienti.Count() > 0)
+                @if(@Model.IngredientiSelezionati != null && @Model.IngredientiSelezionati.Count() > 0)
                 {
-                    @foreach(Ingrediente ingrediente in @Model.Pizza.listaIngredienti)
+                    @foreach(string ingrediente in @Model.IngredientiSelezionati)
                     {
                     <li>
-                        @ingrediente.Name
+                        @ingrediente
                     </li>
                     }
                 }
